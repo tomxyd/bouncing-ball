@@ -7,6 +7,7 @@
 #include "camera.h"
 #include "Utils.h"
 #include "Shader.h"
+#include "Window.h"
 
 #define BUFFER_OFFSET(bytes) ((GLvoid*) (bytes))
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -100,57 +101,67 @@ SphereRenderer* sphere1 = NULL;
 
 int main()
 {
+    Window window(glm::vec2{ 800, 600 }, "My Window");
 
-    initialize_loaders();
-    window = create_window();
-    load_glad();
-
-    ResourceManager::LoadShader(RESOURCES_PATH "vertex.glsl", RESOURCES_PATH "fragment.glsl", "shader1");
-
-    object_renderer = new ObjectRenderer(ResourceManager::GetShader("shader1"), RESOURCES_PATH "Mesh.obj");
-    sphere1 = new SphereRenderer(ResourceManager::GetShader("shader1"));
-
-    //object_renderer->initialize_render_data();
-    //sphere1->initialize_render_data();
-
-    int width = SCR_WIDTH;
-    int height = SCR_HEIGHT;
-    aspectRatio = (float)width / (float)height;
-
-    //float ndcX = (2.0f * mouseX) / width - 1.0f;
-    //float ndcY = 1.0f - (2.0f * mouseY) / height;
-
-    while (!glfwWindowShouldClose(window))
+    while (window.is_open())
     {
 
-        //std::cout << ndcX << std::endl;
-        // per-frame time logic
-        float currentFrame = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-
-        processInput(window);
-        //display(glfwGetTime());
-        glfwGetFramebufferSize(window, &width, &height);
-
-
-        glClear(GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.2, 0.2, 0.2, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glEnable(GL_CULL_FACE);
-
-        object_renderer->draw_mesh(aspectRatio, camera);
-        sphere1->draw_mesh(aspectRatio, glm::vec3(-3.0f, 2.0f , -8.0f), camera);
-
-        glfwSwapBuffers(window);
+        processInput(window.get_window());
         glfwPollEvents();
+
+        window.display();
     }
     glfwTerminate();
-    ResourceManager::clear();
-    delete object_renderer;
-    delete sphere1;
     return 0;
 }
+
+//int main()
+//{
+//
+//    initialize_loaders();
+//    window = create_window();
+//    load_glad();
+//
+//    ResourceManager::LoadShader(RESOURCES_PATH "vertex.glsl", RESOURCES_PATH "fragment.glsl", "shader1");
+//
+//    object_renderer = new ObjectRenderer(ResourceManager::GetShader("shader1"), RESOURCES_PATH "Mesh.obj");
+//    sphere1 = new SphereRenderer(ResourceManager::GetShader("shader1"));
+//
+//
+//    int width = SCR_WIDTH;
+//    int height = SCR_HEIGHT;
+//    aspectRatio = (float)width / (float)height;
+//
+//
+//    while (!glfwWindowShouldClose(window))
+//    {
+//
+//        //std::cout << ndcX << std::endl;
+//        // per-frame time logic
+//        float currentFrame = static_cast<float>(glfwGetTime());
+//        deltaTime = currentFrame - lastFrame;
+//        lastFrame = currentFrame;
+//
+//        processInput(window);
+//        //display(glfwGetTime());
+//        glfwGetFramebufferSize(window, &width, &height);
+//
+//
+//        glClear(GL_DEPTH_BUFFER_BIT);
+//        glClearColor(0.2, 0.2, 0.2, 1.0);
+//        glClear(GL_COLOR_BUFFER_BIT);
+//        glEnable(GL_CULL_FACE);
+//
+//        object_renderer->draw_mesh(aspectRatio, camera);
+//        sphere1->draw_mesh(aspectRatio, glm::vec3(-3.0f, 2.0f , -8.0f), camera);
+//
+//        glfwSwapBuffers(window);
+//        glfwPollEvents();
+//    }
+//
+//    glfwTerminate();
+//    return 0;
+//}
 
 
 void processInput(GLFWwindow* window)

@@ -7,7 +7,7 @@ Window::Window()
 
 Window::~Window()
 {
-    delete window;
+    //delete window;
 }
 
 Window::Window(glm::vec2& size, const char* title)

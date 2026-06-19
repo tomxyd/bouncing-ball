@@ -95,13 +95,13 @@ void load_glad()
     }
 }
 
-GLFWwindow* window = NULL;
+//GLFWwindow* window = NULL;
 ObjectRenderer* object_renderer = NULL;
 SphereRenderer* sphere1 = NULL;
 
 int main()
 {
-    Window window(glm::vec2{ 800, 600 }, "My Window");
+    Window window(glm::vec2{ 1280, 720 }, "My Window");
 
     while (window.is_open())
     {

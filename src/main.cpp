@@ -1,13 +1,10 @@
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "helper_library.h"
-#include "SphereRenderer.h"
-#include "object_renderer.h"
 #include "ResourceManager.h"
 #include "camera.h"
-#include "Utils.h"
 #include "Shader.h"
 #include "Window.h"
+#include "Texture.h"
+#include "Sprite.h"
 
 #define BUFFER_OFFSET(bytes) ((GLvoid*) (bytes))
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -63,51 +60,28 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-
-void initialize_loaders()
-{
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-}
-
-GLFWwindow* create_window() 
-{
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Window", NULL, NULL);
-    if (window == NULL)
-    {
-        glfwTerminate();
-        Tomxy::error("failed to create window");
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, mouse_callback);
-    glfwSetScrollCallback(window, scroll_callback);
-    return window;
-}
-
-void load_glad()
-{
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        Tomxy::error("failed to load glad");
-    }
-}
-
 //GLFWwindow* window = NULL;
-ObjectRenderer* object_renderer = NULL;
-SphereRenderer* sphere1 = NULL;
+//ObjectRenderer* object_renderer = NULL;
+//SphereRenderer* sphere1 = NULL;
 
 int main()
 {
     Window window(glm::vec2{ 1280, 720 }, "My Window");
 
+    const Texture texture(RESOURCES_PATH "brick.png");
+
+    ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
+
+    Sprite sprite(ResourceManager::GetShader("shader1"), texture);
+
     while (window.is_open())
     {
-
         processInput(window.get_window());
         glfwPollEvents();
+
+        window.clear();
+
+        window.draw(sprite);
 
         window.display();
     }

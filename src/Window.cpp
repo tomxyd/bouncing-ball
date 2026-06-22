@@ -43,7 +43,6 @@ bool Window::is_open() const
 void Window::display() const
 {
     glfwSwapBuffers(window);
-
 }
 
 void Window::initialize_loaders()
@@ -52,6 +51,15 @@ void Window::initialize_loaders()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+}
 
+void Window::clear() const
+{
+    glClearColor(0.2, 0.2, 0.2, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
 
+void Window::draw(const Sprite& sprite)
+{
+    sprite.draw();
 }

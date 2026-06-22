@@ -4,7 +4,9 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include "helper_library.h"
+#include "Sprite.h"
 
+class Sprite; //BAD: remove circular dependency
 
 class Window
 {
@@ -25,6 +27,10 @@ public:
 	* @brief Swaps buffers internally.
 	*/
 	void display() const;
+	//
+	void clear() const;
+	//Draw a sprite to the window
+	void draw(const Sprite& sprite);
 	/*
 	* @brief Returns an instance of the window created.
 	*/

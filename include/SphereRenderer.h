@@ -1,7 +1,6 @@
 #include "Shader.h"
 #include "camera.h"
 #include "Sphere.h"
-#include "Utils.h"
 #include <glm/glm.hpp>
 
 //loads vertex data from sphere class

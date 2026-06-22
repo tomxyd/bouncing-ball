@@ -1,7 +1,6 @@
 #include "Shader.h"
 #include "camera.h"
 #include "LoadedMesh.h"
-#include "Utils.h"
 #include <glm/glm.hpp>
 
 

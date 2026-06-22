@@ -1,6 +1,5 @@
 #ifndef HELPER_LIBRARY_H
 #define HELPER_LIBRARY_H
-
 #include <stdexcept>
 #include <string>
 

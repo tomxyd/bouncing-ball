@@ -31,7 +31,7 @@ private:
 	glm::vec2 position = glm::vec2(640.f,360.f);
 	glm::vec2 scale;
 	glm::vec2 size = glm::vec2(100.f, 100.f);
-	glm::vec3 color = glm::vec3(1.f);
+	glm::vec3 color = glm::vec3(1.f, 0.f, 0.f);
 	//declared to call sprite's draw method
 	friend class Window;
 };

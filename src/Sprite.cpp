@@ -74,9 +74,12 @@ void Sprite::draw(glm::mat4& ortho) const
     this->shader->setMat4("model", model);
     this->shader->setVec3("spriteColor", color);
 
-    glActiveTexture(GL_TEXTURE0);
-    texture->bind_texture();
+    //glActiveTexture(GL_TEXTURE0);
+    //texture->bind_texture();
 
     glBindVertexArray(vertex_array);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }

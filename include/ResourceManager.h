@@ -14,6 +14,10 @@ class ResourceManager
 {
 
 public:
+	~ResourceManager()
+	{
+		clear();
+	}
 	static std::map<std::string, Shader> Shaders;
 
 	static Shader& LoadShader(const char* vShaderFile, const char* fShaderFile, std::string name);

@@ -42,6 +42,7 @@ private:
 	void initialize_loaders();
 private:
 	GLFWwindow* window = NULL;
+	glm::vec2 size;
 
 };
 

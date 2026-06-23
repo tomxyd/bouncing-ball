@@ -1,5 +1,12 @@
 #include "Sprite.h"
 
+void Sprite::load_shader() 
+{
+    ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
+
+    this->shader = &ResourceManager::GetShader("shader1");
+}
+
 
 Sprite::~Sprite()
 {
@@ -9,18 +16,19 @@ Sprite::~Sprite()
 
 }
 
-Sprite::Sprite(const Shader& shader, const Texture& texture)
+Sprite::Sprite(const Texture& texture)
 {
-    this->shader = &shader;
+    load_shader();
+
     this->texture = &texture;
     // set up vertex data (and buffer(s)) and configure vertex attributes
 // ------------------------------------------------------------------
     float vertices[] = {
         // positions          // colors           // texture coords
-         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+         1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+         1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+        -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
     };
 
     int indices[] = {
@@ -51,7 +59,7 @@ Sprite::Sprite(const Shader& shader, const Texture& texture)
     glEnableVertexAttribArray(2);
 }
 
-void Sprite::draw() const
+void Sprite::draw(glm::mat4& ortho) const
 {
     // prepare transformations
     this->shader->use();
@@ -62,6 +70,7 @@ void Sprite::draw() const
     model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
     model = glm::scale(model, glm::vec3(size, 1.0f));
 
+    this->shader->setMat4("projection", ortho);
     this->shader->setMat4("model", model);
     this->shader->setVec3("spriteColor", color);
 

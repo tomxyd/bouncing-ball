@@ -60,19 +60,13 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-//GLFWwindow* window = NULL;
-//ObjectRenderer* object_renderer = NULL;
-//SphereRenderer* sphere1 = NULL;
-
 int main()
 {
     Window window(glm::vec2{ 1280, 720 }, "My Window");
 
     const Texture texture(RESOURCES_PATH "brick.png");
 
-    ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
-
-    Sprite sprite(ResourceManager::GetShader("shader1"), texture);
+    Sprite sprite(texture);
 
     while (window.is_open())
     {

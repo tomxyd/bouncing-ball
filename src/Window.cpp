@@ -13,7 +13,7 @@ Window::~Window()
 Window::Window(glm::vec2& size, const char* title)
 {
     Window();
-
+    this->size = size;
     this->window = glfwCreateWindow(size.x, size.y, title, NULL, NULL);
     if (this->window == NULL)
     {
@@ -61,5 +61,6 @@ void Window::clear() const
 
 void Window::draw(const Sprite& sprite)
 {
-    sprite.draw();
+    glm::mat4 ortho = glm::ortho(0.0f, size.x, size.y, 0.0f, -1.f, 1.f);
+    sprite.draw(ortho);
 }

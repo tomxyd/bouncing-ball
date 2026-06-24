@@ -68,6 +68,10 @@ int main()
 
     Sprite sprite(texture);
 
+    float speed = 0.06f;
+
+    sprite.set_color({ 1.0,1.0,0.0 }); // set color to yellow
+
     while (window.is_open())
     {
         processInput(window.get_window());
@@ -75,7 +79,20 @@ int main()
 
         window.clear();
 
+        if (sprite.get_position().x >= 1280 || sprite.get_local_bound().y >= 720)
+        {
+            speed *= -1;
+        }
+        else
+            speed = speed;
+
+        sprite.set_position({ sprite.get_position().x, sprite.get_position().y + speed });
+
+        sprite.set_scale({150.f, 150.f});
+
         window.draw(sprite);
+
+
 
         window.display();
     }

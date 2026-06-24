@@ -43,8 +43,6 @@ bool Window::is_open() const
 
 void Window::display() const
 {
-    //glDisable(GL_BLEND);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glfwSwapBuffers(window);
 }
 

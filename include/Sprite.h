@@ -5,17 +5,22 @@
 #include "Window.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp> 
 #include "helper_library.h"
 #include "ResourceManager.h"
+#include "Transformable.h"
 
 
 class Window;
 
-class Sprite
+class Sprite : public Transformable
 {
 public:
 	//construct sprite from a source texture
 	explicit Sprite(const Texture& texture);
+	glm::vec2 get_local_bound() const;
+	void set_color(glm::vec3 color);
 	~Sprite();
 
 
@@ -27,11 +32,7 @@ private:
 	unsigned int element_buffer;
 	const Texture* texture;
 	const Shader* shader;
-	//Transform abstract variables seperation
-	glm::vec2 position = glm::vec2(640.f,360.f);
-	glm::vec2 scale;
-	glm::vec2 size = glm::vec2(100.f, 100.f);
-	glm::vec3 color = glm::vec3(1.f, 0.f, 0.f);
+	glm::vec3 color;
 	//declared to call sprite's draw method
 	friend class Window;
 };

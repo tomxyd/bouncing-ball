@@ -16,8 +16,21 @@ Sprite::~Sprite()
 
 }
 
+glm::vec2 Sprite::get_local_bound() const
+{
+    //TO DO: WRONG CALCULATION
+    return { get_position().x + 1.0f, get_position().y + 1.0f};
+}
+
+void Sprite::set_color(glm::vec3 color)
+{
+    this->color = color;
+}
+
 Sprite::Sprite(const Texture& texture)
 {
+    set_position(glm::vec2(640.f, 360.f));
+
     load_shader();
 
     this->texture = &texture;
@@ -64,11 +77,13 @@ void Sprite::draw(glm::mat4& ortho) const
     // prepare transformations
     this->shader->use();
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(position, 0.0f));
 
-    model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
-    model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-    model = glm::scale(model, glm::vec3(size, 1.0f));
+
+    model = glm::translate(model, glm::vec3(get_position(), 0.0f));
+    model = glm::translate(model, glm::vec3(0.5f * get_scale().x, 0.5f * get_scale().y, 0.0f));
+    model = glm::rotate(model, glm::radians(get_rotation()), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::translate(model, glm::vec3(-0.5f * get_scale().x, -0.5f * get_scale().y, 0.0f));
+    model = glm::scale(model, glm::vec3(get_scale(), 1.0f));
 
     this->shader->setMat4("projection", ortho);
     this->shader->setMat4("model", model);

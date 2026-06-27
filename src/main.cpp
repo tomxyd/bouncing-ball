@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Texture.h"
 #include "Sprite.h"
+#include "Shape.h"
 
 #define BUFFER_OFFSET(bytes) ((GLvoid*) (bytes))
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -60,7 +61,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-int main()
+void test_sprite()
 {
     Window window(glm::vec2{ 1280, 720 }, "My Window");
 
@@ -88,7 +89,7 @@ int main()
 
         sprite.set_position({ sprite.get_position().x, sprite.get_position().y + speed });
 
-        sprite.set_scale({150.f, 150.f});
+        sprite.set_scale({ 150.f, 150.f });
 
         window.draw(sprite);
 
@@ -98,6 +99,49 @@ int main()
     }
     glfwTerminate();
     return 0;
+}
+void test_circle_shape()
+{
+    Window window(glm::vec2{ 1280, 720 }, "My Window");
+
+    const Texture texture(RESOURCES_PATH "brick.png");
+
+    Sprite sprite(texture);
+
+    float speed = 0.06f;
+
+    sprite.set_color({ 1.0,1.0,0.0 }); // set color to yellow
+
+    while (window.is_open())
+    {
+        processInput(window.get_window());
+        glfwPollEvents();
+
+        window.clear();
+
+        if (sprite.get_position().x >= 1280 || sprite.get_local_bound().y >= 720)
+        {
+            speed *= -1;
+        }
+        else
+            speed = speed;
+
+        sprite.set_position({ sprite.get_position().x, sprite.get_position().y + speed });
+
+        sprite.set_scale({ 150.f, 150.f });
+
+        window.draw(sprite);
+
+
+
+        window.display();
+    }
+    glfwTerminate();
+    return 0;
+}
+int main()
+{
+
 }
 
 //int main()

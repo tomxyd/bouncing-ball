@@ -5,7 +5,8 @@
 #include "Window.h"
 #include "Texture.h"
 #include "Sprite.h"
-#include "Shape.h"
+#include "CircleShape.h"
+#include "RenderState.h"
 
 #define BUFFER_OFFSET(bytes) ((GLvoid*) (bytes))
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -28,6 +29,8 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 float mouseX;
 float mouseY;
+
+
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
@@ -71,7 +74,7 @@ void test_sprite()
 
     float speed = 0.06f;
 
-    sprite.set_color({ 1.0,1.0,0.0 }); // set color to yellow
+    //sprite.set_color(Color::Black); // set color to yellow
 
     while (window.is_open())
     {
@@ -80,25 +83,22 @@ void test_sprite()
 
         window.clear();
 
-        if (sprite.get_position().x >= 1280 || sprite.get_local_bound().y >= 720)
-        {
-            speed *= -1;
-        }
-        else
-            speed = speed;
+        //if (sprite.get_position().x >= 1280 || sprite.get_local_bound().y >= 720)
+        //{
+        //    speed *= -1;
+        //}
+        //else
+        //    speed = speed;
 
-        sprite.set_position({ sprite.get_position().x, sprite.get_position().y + speed });
+        //sprite.set_position({ sprite.get_position().x, sprite.get_position().y + speed });
 
-        sprite.set_scale({ 150.f, 150.f });
+        //sprite.set_scale({ 150.f, 150.f });
 
         window.draw(sprite);
-
-
 
         window.display();
     }
     glfwTerminate();
-    return 0;
 }
 void test_circle_shape()
 {
@@ -106,11 +106,9 @@ void test_circle_shape()
 
     const Texture texture(RESOURCES_PATH "brick.png");
 
-    Sprite sprite(texture);
+    //CircleShape circle(20);
 
-    float speed = 0.06f;
 
-    sprite.set_color({ 1.0,1.0,0.0 }); // set color to yellow
 
     while (window.is_open())
     {
@@ -119,29 +117,17 @@ void test_circle_shape()
 
         window.clear();
 
-        if (sprite.get_position().x >= 1280 || sprite.get_local_bound().y >= 720)
-        {
-            speed *= -1;
-        }
-        else
-            speed = speed;
 
-        sprite.set_position({ sprite.get_position().x, sprite.get_position().y + speed });
-
-        sprite.set_scale({ 150.f, 150.f });
-
-        window.draw(sprite);
-
-
+        //window.draw(circle);
 
         window.display();
     }
     glfwTerminate();
-    return 0;
 }
 int main()
 {
-
+    test_sprite();
+    return 0;
 }
 
 //int main()

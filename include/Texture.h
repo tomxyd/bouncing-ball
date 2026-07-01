@@ -1,5 +1,6 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
+
 #include "stb_image.h"
 #include <glad/glad.h>
 #include "helper_library.h"

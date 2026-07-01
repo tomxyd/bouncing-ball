@@ -1,0 +1,19 @@
+#ifndef RENDER_STATE_H
+#define RENDER_STATE_H
+
+
+#include "Shader.h"
+#include "Texture.h"
+#include "ResourceManager.h"
+
+struct RenderState
+{
+public:
+	RenderState() = default;
+	RenderState(const Shader* shader);
+	static const RenderState default;
+	const Shader* m_shader = nullptr;
+	const Texture* m_texture = nullptr;
+};
+
+#endif

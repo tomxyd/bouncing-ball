@@ -4,13 +4,13 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include "helper_library.h"
-#include "Sprite.h"
+#include "RenderTarget.h"
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp> 
 
-class Sprite; //BAD: remove circular dependency
-
-class Window
+class Window : public RenderTarget
 {
-public:
+public: 
 	//Default constructor
 	Window();
 	//@brief Frees resources attached to the window
@@ -29,8 +29,6 @@ public:
 	void display() const;
 	//
 	void clear() const;
-	//Draw a sprite to the window
-	void draw(const Sprite& sprite);
 	/*
 	* @brief Returns an instance of the window created.
 	*/

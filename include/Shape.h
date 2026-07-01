@@ -18,10 +18,10 @@ class Shape : public Transformable
 {
 public:
 	//construct sprite from a source texture
-	explicit Shape(const float& radius);
+	Shape(const float& radius);
 	glm::vec2 get_local_bound() const;
 	void set_color(glm::vec3 color);
-	virtual size_t get_point_count() const = 0;
+	virtual std::size_t get_point_count() = 0;
 	virtual glm::vec2 get_point(size_t index) = 0;
 	~Shape();
 

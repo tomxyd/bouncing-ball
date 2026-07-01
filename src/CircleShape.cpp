@@ -1,21 +1,12 @@
 #include "CircleShape.h"
 
-explicit CircleShape::CircleShape(const float& radius)
+
+std::size_t CircleShape::get_point_count() 
 {
-	this->radius = radius;
+	return count;
 }
 
-CircleShape::~CircleShape()
+glm::vec2 CircleShape::get_point(size_t index) 
 {
-
-}
-
-std::size_t CircleShape::get_point_count() const override
-{
-
-}
-
-glm::vec2 CircleShape::get_point(size_t index) const override
-{
-
+	return glm::vec2({ 1.0f, 1.0f });
 }

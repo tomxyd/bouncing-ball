@@ -1,7 +1,7 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-#include <glm/glm.hpp>
+#include <Glm.h>
 #include "Color.h"
 
 

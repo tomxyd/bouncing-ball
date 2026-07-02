@@ -50,14 +50,8 @@ void RenderTarget::draw(const Vertex* vertices, const RenderState& state)
 
 }
 
-void RenderTarget::draw(const VertexBuffer& vertexBuffer, const RenderState& state)
-{
-
-}
-
 void RenderTarget::draw(const Drawable& drawable, const RenderState& state)
 {
-
 	drawable.draw(*this, state);
 }
 

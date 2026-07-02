@@ -2,7 +2,7 @@
 #define TEXTURE_H
 
 #include "stb_image.h"
-#include <glad/glad.h>
+#include <OpenGL.h>
 #include "helper_library.h"
 
 class Texture

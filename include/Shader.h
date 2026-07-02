@@ -1,10 +1,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp> 
+#include <OpenGL.h>
+#include <Glm.h>
 #include <string>
 #include <fstream>
 #include <sstream>

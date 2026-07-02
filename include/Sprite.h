@@ -30,14 +30,10 @@ private:
 	void draw(RenderTarget& target, RenderState state) const override;
 	void update_vertices();
 	void load_shader();
-	unsigned int vertex_array;
-	unsigned int vertex_buffer;
-	const Texture* texture;
-	const Shader* shader;
+	const Texture* m_texture;
+	const Shader* m_shader;
 	Color m_color;
-
 	std::array<Vertex, 6> m_vertices;
-	//declared to call sprite's draw method
 	friend class Window;
 };
 

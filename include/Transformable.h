@@ -1,7 +1,7 @@
 #ifndef TRANSFORMABLE_H
 #define TRANSFORMABLE_H
 
-#include <glm/glm.hpp>
+#include <Glm.h>
 
 class Transformable
 {

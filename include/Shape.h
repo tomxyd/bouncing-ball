@@ -1,12 +1,9 @@
 #ifndef SHAPE_H
 #define SHAPE_H
+
 #include "Texture.h"
 #include <Shader.h>
 #include "Window.h"
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp> 
 #include "helper_library.h"
 #include "ResourceManager.h"
 #include "Transformable.h"

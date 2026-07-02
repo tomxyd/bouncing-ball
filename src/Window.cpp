@@ -5,23 +5,19 @@ Window::Window()
     initialize_loaders();
 }
 
-Window::~Window()
-{
-    //glfwTerminate();
-    //delete window;
-}
+Window::~Window() = default;
 
 Window::Window(glm::vec2& size, const char* title)
 {
     Window();
-    this->size = size;
-    this->window = glfwCreateWindow(size.x, size.y, title, NULL, NULL);
-    if (this->window == NULL)
+    this->m_size = size;
+    this->m_window = glfwCreateWindow(size.x, size.y, title, NULL, NULL);
+    if (this->m_window == NULL)
     {
         glfwTerminate();
         Tomxy::error("failed to create window");
     }
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(m_window);
     //glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     //glfwSetCursorPosCallback(window, mouse_callback);
     //glfwSetScrollCallback(window, scroll_callback);
@@ -35,7 +31,7 @@ Window::Window(glm::vec2& size, const char* title)
 
 bool Window::is_open() const
 {
-    if (glfwWindowShouldClose(this->window))
+    if (glfwWindowShouldClose(this->m_window))
         return false;
     else
         return true;
@@ -43,7 +39,7 @@ bool Window::is_open() const
 
 void Window::display() const
 {
-    glfwSwapBuffers(window);
+    glfwSwapBuffers(m_window);
 }
 
 void Window::initialize_loaders()

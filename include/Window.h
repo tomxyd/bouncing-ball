@@ -1,12 +1,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+
 #include "helper_library.h"
 #include "RenderTarget.h"
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp> 
+#include <OpenGL.h>
+#include <Glm.h>
 
 class Window : public RenderTarget
 {
@@ -27,20 +25,22 @@ public:
 	* @brief Swaps buffers internally.
 	*/
 	void display() const;
-	//
+	/*
+	* @brief clears the window context with default color
+	*/
 	void clear() const;
 	/*
 	* @brief Returns an instance of the window created.
 	*/
 	GLFWwindow* get_window() const
 	{
-		return window;
+		return m_window;
 	}
 private:
 	void initialize_loaders();
 private:
-	GLFWwindow* window = NULL;
-	glm::vec2 size;
+	GLFWwindow* m_window = NULL;
+	glm::vec2 m_size;
 
 };
 

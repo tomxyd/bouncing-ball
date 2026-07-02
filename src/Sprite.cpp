@@ -3,16 +3,13 @@
 void Sprite::load_shader() 
 {
     ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
-
 }
-
 
 Sprite::~Sprite()
 {
-    glDeleteVertexArrays(1, &vertex_array);
-    glDeleteBuffers(1, &vertex_buffer);
+    delete m_shader;
+    delete m_texture;
 }
-
 glm::vec2 Sprite::get_local_bound() const
 {
     //TO DO: WRONG CALCULATION
@@ -32,7 +29,7 @@ Sprite::Sprite(const Texture& texture)
 
     load_shader();
 
-    this->texture = &texture;
+    this->m_texture = &texture;
     // set up vertex data (and buffer(s)) and configure vertex attributes
 //// ------------------------------------------------------------------
 //    float vertices[] = {
@@ -88,7 +85,7 @@ Sprite::Sprite(const Texture& texture)
 
 void Sprite::draw(RenderTarget& target, RenderState state) const
 {
-    state.m_texture = texture;
+    state.m_texture = m_texture;
     state.m_shader = &ResourceManager::GetShader("shader1");
     target.draw(m_vertices.data(), state);
 }
@@ -109,6 +106,5 @@ void Sprite::update_vertices()
     m_vertices[3].texCoords = { 0.f,1.0f };
     m_vertices[4].texCoords = { 1.f,1.0f };
     m_vertices[5].texCoords = { 1.f,0.0f };
-
 }
 

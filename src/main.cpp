@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "CircleShape.h"
 #include "RenderState.h"
+#include "VertexArray.h"
 
 #define BUFFER_OFFSET(bytes) ((GLvoid*) (bytes))
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -124,10 +125,32 @@ void test_circle_shape()
     }
     glfwTerminate();
 }
+void test_vertex_array()
+{
+    Window window(glm::vec2{ 1280, 720 }, "My Window");
 
+    VertexArray lines(PrimitiveType::LineStrip, 4);
+    lines[0].position = glm::vec2(1.0f, 0);
+    lines[1].position = glm::vec2(0.0f, 0);
+    lines[2].position = glm::vec2(0.f, 1.0);
+    lines[3].position = glm::vec2(1.f, 1.f);
+
+    while (window.is_open())
+    {
+        processInput(window.get_window());
+        glfwPollEvents();
+
+        window.clear();
+
+        window.draw(lines);
+
+        window.display();
+    }
+    glfwTerminate();
+}
 int main()
 {
-    test_sprite();
+    test_vertex_array();
     return 0;
 }
 

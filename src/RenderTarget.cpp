@@ -13,7 +13,7 @@ void RenderTarget::clear()
 }
 
 
-void RenderTarget::draw(const Vertex* vertices, const RenderState& state)
+void RenderTarget::draw(const Vertex* vertices, std::size_t vertex_count, PrimitiveType type, const RenderState& state)
 {
 	// generate vertex buffer and bind m_vertices to the buffer data
 	glGenVertexArrays(1, &vertex_array);
@@ -21,7 +21,7 @@ void RenderTarget::draw(const Vertex* vertices, const RenderState& state)
 
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(Vertex), vertices, GL_STATIC_DRAW);
 
 
 
@@ -46,7 +46,9 @@ void RenderTarget::draw(const Vertex* vertices, const RenderState& state)
     setup_draw(state);
 
     glBindVertexArray(vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+
+    draw_primitive(type, 0, vertex_count);
 
 }
 
@@ -89,5 +91,21 @@ void RenderTarget::setup_draw(const RenderState& state)
 
 void RenderTarget::apply_shader(const Shader* shader)
 {
-    Shader::bind(shader);
+    if(shader)
+        Shader::bind(shader);
+}
+
+void RenderTarget::draw_primitive(PrimitiveType type, std::size_t first_vertex, std::size_t vertex_count)
+{
+    GLenum mode{};
+    switch (type)
+    {
+    case PrimitiveType::LineStrip:
+        mode = GL_LINE_STRIP;
+    case PrimitiveType::Triangles:
+        mode = GL_TRIANGLES;
+    }
+
+    // Draw the primitives
+    glDrawArrays(mode, static_cast<GLint>(first_vertex), static_cast<GLsizei>(vertex_count));
 }

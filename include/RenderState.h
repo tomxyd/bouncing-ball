@@ -11,7 +11,7 @@ struct RenderState
 public:
 	RenderState() = default;
 	RenderState(const Shader* shader);
-	static const RenderState default;
+	static const RenderState Default;
 	const Shader* m_shader = nullptr;
 	const Texture* m_texture = nullptr;
 };

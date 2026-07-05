@@ -87,7 +87,7 @@ void Sprite::draw(RenderTarget& target, RenderState state) const
 {
     state.m_texture = m_texture;
     state.m_shader = &ResourceManager::GetShader("shader1");
-    target.draw(m_vertices.data(), state);
+    target.draw(m_vertices.data(), m_vertices.size(), PrimitiveType::Triangles, state);
 }
 
 void Sprite::update_vertices()

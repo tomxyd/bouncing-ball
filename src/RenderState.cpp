@@ -1,6 +1,6 @@
 #include "RenderState.h"
 
-const RenderState RenderState::default = RenderState();
+const RenderState RenderState::Default = RenderState();
 
 
 RenderState::RenderState(const Shader* shader)

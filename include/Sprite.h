@@ -1,17 +1,19 @@
 #ifndef SPRITE_H
 #define SPRITE_H
+
+
 #include "Texture.h"
 #include "Window.h"
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp> 
 #include "helper_library.h"
 #include "ResourceManager.h"
 #include "Transformable.h"
 #include "Color.h"
+#include "PrimitiveType.h"
 #include "Vertex.h"
 #include "Drawable.h"
 #include <array>
 #include "RenderState.h"
+#include <Glm.h>
 
 
 class Window;

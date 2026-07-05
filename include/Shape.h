@@ -7,6 +7,7 @@
 #include "helper_library.h"
 #include "ResourceManager.h"
 #include "Transformable.h"
+#include "VertexArray.h"
 
 
 class Window;
@@ -26,9 +27,7 @@ public:
 private:
 	void draw(glm::mat4& ortho) const;
 	void load_shader();
-	unsigned int vertex_array;
-	unsigned int vertex_buffer;
-	unsigned int element_buffer;
+	VertexArray m_vertices{};
 	const Texture* texture = nullptr;
 	const Shader* shader;
 	glm::vec3 color;

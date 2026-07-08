@@ -9,6 +9,9 @@ RenderTarget::~RenderTarget()
 
 void RenderTarget::clear()
 {
+    glDeleteBuffers(1, &vertex_buffer);
+    glDeleteBuffers(1, &vertex_array);
+
 
 }
 

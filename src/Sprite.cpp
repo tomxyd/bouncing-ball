@@ -30,58 +30,8 @@ Sprite::Sprite(const Texture& texture)
     load_shader();
 
     this->m_texture = &texture;
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-//// ------------------------------------------------------------------
-//    float vertices[] = {
-//        // pos      // tex
-//        0.0f, 1.0f, 0.0f, 1.0f,
-//        1.0f, 0.0f, 1.0f, 0.0f,
-//        0.0f, 0.0f, 0.0f, 0.0f,
-//
-//        0.0f, 1.0f, 0.0f, 1.0f,
-//        1.0f, 1.0f, 1.0f, 1.0f,
-//        1.0f, 0.0f, 1.0f, 0.0f
-//    };
-//
-//    glGenVertexArrays(1, &vertex_array);
-//    glGenBuffers(1, &vertex_buffer);
-//
-//
-//    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-//
-//    // position attribute
-//    glBindVertexArray(vertex_array);
-//    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-//    glEnableVertexAttribArray(0);
 }
 
-//void Sprite::draw(glm::mat4& ortho) const
-//{
-//    // prepare transformations
-//    this->shader->use();
-//    glm::mat4 model = glm::mat4(1.0f);
-//
-//
-//    model = glm::translate(model, glm::vec3(get_position(), 0.0f));
-//    model = glm::translate(model, glm::vec3(0.5f * get_scale().x, 0.5f * get_scale().y, 0.0f));
-//    model = glm::rotate(model, glm::radians(get_rotation()), glm::vec3(0.0f, 0.0f, 1.0f));
-//    model = glm::translate(model, glm::vec3(-0.5f * get_scale().x, -0.5f * get_scale().y, 0.0f));
-//    model = glm::scale(model, glm::vec3(get_scale(), 1.0f));
-//
-//    this->shader->setMat4("projection", ortho);
-//    this->shader->setMat4("model", model);
-//    //this->shader->setVec3("spriteColor", color);
-//
-//    glActiveTexture(GL_TEXTURE0);
-//    texture->bind_texture();
-//
-//    glBindVertexArray(vertex_array);
-//    glDrawArrays(GL_TRIANGLES, 0, 6);
-//
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//}
 
 void Sprite::draw(RenderTarget& target, RenderState state) const
 {

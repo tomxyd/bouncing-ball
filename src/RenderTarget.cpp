@@ -105,8 +105,13 @@ void RenderTarget::draw_primitive(PrimitiveType type, std::size_t first_vertex, 
     {
     case PrimitiveType::LineStrip:
         mode = GL_LINE_STRIP;
+        break;
     case PrimitiveType::Triangles:
         mode = GL_TRIANGLES;
+        break;
+    case PrimitiveType::Points:
+        mode = GL_POINTS;
+        break;
     }
 
     // Draw the primitives

@@ -3,8 +3,6 @@
 void Shape::load_shader()
 {
     ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
-
-    this->shader = &ResourceManager::GetShader("shader1");
 }
 
 
@@ -27,75 +25,73 @@ void Shape::set_color(glm::vec3 color)
     this->color = color;
 }
 
-Shape::Shape(const float& radius)
+//Shape::Shape(const float& radius)
+//{
+//    set_position(glm::vec2(640.f, 360.f));
+//
+//    load_shader();
+//
+//    // set up vertex data (and buffer(s)) and configure vertex attributes
+//// ------------------------------------------------------------------
+//    float vertices[] = {
+//        // positions          // colors           // texture coords
+//         1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+//         1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+//        -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+//        -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+//    };
+//
+//    int indices[] = {
+//        0, 1, 3, // first triangle
+//        1, 2, 3  // second triangle
+//    };
+//
+//    //glGenVertexArrays(1, &vertex_array);
+//    //glGenBuffers(1, &vertex_buffer);
+//    //glGenBuffers(1, &element_buffer);
+//
+//    //glBindVertexArray(vertex_array);
+//
+//    //glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+//    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+//
+//    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer);
+//    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+//
+//    //// position attribute
+//    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+//    //glEnableVertexAttribArray(0);
+//    //// color attribute
+//    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+//    //glEnableVertexAttribArray(1);
+//    //// texture coord attribute
+//    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+//    //glEnableVertexAttribArray(2);
+//}
+
+void Shape::update()
 {
-    set_position(glm::vec2(640.f, 360.f));
+    const std::size_t count = get_point_count();
+    if (count < 3)
+        m_vertices.clear();
 
-    load_shader();
+    m_vertices.resize(count + 2); // for center and repeated first point
 
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-// ------------------------------------------------------------------
-    float vertices[] = {
-        // positions          // colors           // texture coords
-         1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-         1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-    };
+    for (std::size_t i = 0; i < count; ++i)
+        m_vertices[i + 1].position = get_point(i);
+    m_vertices[count + 1].position = m_vertices[1].position; // the last position becomes the first index position
 
-    int indices[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
 
-    //glGenVertexArrays(1, &vertex_array);
-    //glGenBuffers(1, &vertex_buffer);
-    //glGenBuffers(1, &element_buffer);
-
-    //glBindVertexArray(vertex_array);
-
-    //glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, element_buffer);
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    //// position attribute
-    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    //glEnableVertexAttribArray(0);
-    //// color attribute
-    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    //glEnableVertexAttribArray(1);
-    //// texture coord attribute
-    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    //glEnableVertexAttribArray(2);
 }
 
-void Shape::draw(glm::mat4& ortho) const
+void Shape::draw(RenderTarget& target, RenderState state) const
 {
-    // prepare transformations
-    this->shader->use();
-    glm::mat4 model = glm::mat4(1.0f);
+    state.m_texture = m_texture;
+    state.m_shader = m_shader;
+    target.draw(m_vertices, state);
+}
 
-
-    model = glm::translate(model, glm::vec3(get_position(), 0.0f));
-    model = glm::translate(model, glm::vec3(0.5f * get_scale().x, 0.5f * get_scale().y, 0.0f));
-    model = glm::rotate(model, glm::radians(get_rotation()), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-0.5f * get_scale().x, -0.5f * get_scale().y, 0.0f));
-    model = glm::scale(model, glm::vec3(get_scale(), 1.0f));
-
-    this->shader->setMat4("projection", ortho);
-    this->shader->setMat4("model", model);
-    this->shader->setVec3("spriteColor", color);
-
-    //TO DO: Pass float var to shader
-
-    //glActiveTexture(GL_TEXTURE0);
-    //texture->bind_texture();
-
-    //glBindVertexArray(vertex_array);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+void Shape::set_shader(const Shader& shader)
+{
+    m_shader = &shader;
 }

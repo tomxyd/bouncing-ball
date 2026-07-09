@@ -25,3 +25,13 @@ const Vertex& VertexArray::operator[](std::size_t index) const
     assert(index < m_vertices.size() && "Index is out of bounds");
     return m_vertices[index];
 }
+
+void VertexArray::clear()
+{
+    m_vertices.clear();
+}
+
+void VertexArray::resize(std::size_t count)
+{
+    m_vertices.resize(count);
+}

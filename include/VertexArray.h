@@ -32,6 +32,8 @@ public:
 	VertexArray(PrimitiveType type, std::size_t vertex_count);
 	Vertex& VertexArray::operator[](std::size_t index);
 	const Vertex& VertexArray::operator[](std::size_t index) const;
+	void clear();
+	void resize(std::size_t count);
 
 private:
 	void draw(RenderTarget& target, RenderState state) const override;

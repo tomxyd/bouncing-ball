@@ -12,26 +12,28 @@
 
 class Window;
 
-class Shape : public Transformable
+class Shape : public Drawable, public Transformable
 {
 public:
 	//construct sprite from a source texture
-	Shape(const float& radius);
+	Shape() = default;
 	glm::vec2 get_local_bound() const;
 	void set_color(glm::vec3 color);
 	virtual std::size_t get_point_count() = 0;
 	virtual glm::vec2 get_point(size_t index) = 0;
+	void set_shader(const Shader& shader);
 	~Shape();
+protected:
+	void update();
 
 
 private:
-	void draw(glm::mat4& ortho) const;
+	void draw(RenderTarget& target, RenderState state) const override;
 	void load_shader();
 	VertexArray m_vertices{};
-	const Texture* texture = nullptr;
-	const Shader* shader;
+	const Texture* m_texture = nullptr;
+	const Shader* m_shader = nullptr;
 	glm::vec3 color;
-	float radius;
 	//declared to call sprite's draw method
 	friend class Window;
 };

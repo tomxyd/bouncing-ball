@@ -107,7 +107,7 @@ void test_circle_shape()
 
     const Texture texture(RESOURCES_PATH "brick.png");
 
-    //CircleShape circle(20);
+    CircleShape circle(20.f);
 
 
 
@@ -118,8 +118,7 @@ void test_circle_shape()
 
         window.clear();
 
-
-        //window.draw(circle);
+        window.draw(circle);
 
         window.display();
     }
@@ -148,9 +147,11 @@ void test_vertex_array()
     }
     glfwTerminate();
 }
+
+
 int main()
 {
-    test_vertex_array();
+    test_circle_shape();
     return 0;
 }
 

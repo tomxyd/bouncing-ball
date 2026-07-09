@@ -3,8 +3,6 @@
 
 VertexArray::VertexArray(PrimitiveType type, std::size_t vertex_count) : m_vertices(vertex_count), m_primitive_type(type)
 {
-    ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
-
 }
 
 void VertexArray::draw(RenderTarget& target, RenderState state) const

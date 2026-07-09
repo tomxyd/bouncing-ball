@@ -1,10 +1,5 @@
 #include "Shape.h"
 
-void Shape::load_shader()
-{
-    ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
-}
-
 
 Shape::~Shape()
 {
@@ -87,7 +82,6 @@ void Shape::update()
 void Shape::draw(RenderTarget& target, RenderState state) const
 {
     state.m_texture = m_texture;
-    state.m_shader = m_shader;
     target.draw(m_vertices, state);
 }
 

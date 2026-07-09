@@ -10,7 +10,7 @@ struct RenderState
 {
 public:
 	RenderState() = default;
-	RenderState(const Shader* shader);
+	RenderState(const Shader* shader); // FIX
 	static const RenderState Default;
 	const Shader* m_shader = nullptr;
 	const Texture* m_texture = nullptr;

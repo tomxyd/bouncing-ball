@@ -1,15 +1,5 @@
 #include "Sprite.h"
 
-void Sprite::load_shader() 
-{
-    ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
-}
-
-Sprite::~Sprite()
-{
-    delete m_shader;
-    delete m_texture;
-}
 glm::vec2 Sprite::get_local_bound() const
 {
     //TO DO: WRONG CALCULATION
@@ -27,8 +17,6 @@ Sprite::Sprite(const Texture& texture)
 
     set_position(glm::vec2(640.f, 360.f));
 
-    load_shader();
-
     this->m_texture = &texture;
 }
 
@@ -36,7 +24,6 @@ Sprite::Sprite(const Texture& texture)
 void Sprite::draw(RenderTarget& target, RenderState state) const
 {
     state.m_texture = m_texture;
-    state.m_shader = &ResourceManager::GetShader("shader1");
     target.draw(m_vertices.data(), m_vertices.size(), PrimitiveType::Triangles, state);
 }
 

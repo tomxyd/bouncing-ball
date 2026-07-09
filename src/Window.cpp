@@ -27,6 +27,10 @@ Window::Window(glm::vec2& size, const char* title)
     {
         Tomxy::error("failed to load glad");
     }
+
+    //Load shader
+    ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
+
 }
 
 bool Window::is_open() const

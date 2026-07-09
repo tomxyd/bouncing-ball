@@ -29,8 +29,7 @@ protected:
 
 private:
 	void draw(RenderTarget& target, RenderState state) const override;
-	void load_shader();
-	VertexArray m_vertices{};
+	VertexArray m_vertices{ PrimitiveType::TriangleFan };
 	const Texture* m_texture = nullptr;
 	const Shader* m_shader = nullptr;
 	glm::vec3 color;

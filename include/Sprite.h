@@ -25,15 +25,13 @@ public:
 	explicit Sprite(const Texture& texture);
 	glm::vec2 get_local_bound() const;
 	void set_color(const Color& color);
-	~Sprite();
+	~Sprite() = default;
 
 
 private:
 	void draw(RenderTarget& target, RenderState state) const override;
 	void update_vertices();
-	void load_shader();
-	const Texture* m_texture;
-	const Shader* m_shader;
+	const Texture* m_texture = nullptr;
 	Color m_color;
 	std::array<Vertex, 6> m_vertices;
 	friend class Window;

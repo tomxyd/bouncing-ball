@@ -29,7 +29,7 @@ class VertexArray: public Drawable
 public:
 	// Creates an empty vertex array
 	VertexArray() = default;
-	VertexArray(PrimitiveType type, std::size_t vertex_count);
+	explicit VertexArray(PrimitiveType type, std::size_t vertex_count = 0);
 	Vertex& VertexArray::operator[](std::size_t index);
 	const Vertex& VertexArray::operator[](std::size_t index) const;
 	void clear();

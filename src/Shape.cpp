@@ -76,12 +76,17 @@ void Shape::update()
         m_vertices[i + 1].position = get_point(i);
     m_vertices[count + 1].position = m_vertices[1].position; // the last position becomes the first index position
 
+    m_vertices[0] = m_vertices[1];
+
 
 }
 
 void Shape::draw(RenderTarget& target, RenderState state) const
 {
     state.m_texture = m_texture;
+
+    //pre-transform 
+
     target.draw(m_vertices, state);
 }
 

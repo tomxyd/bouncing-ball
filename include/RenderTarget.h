@@ -7,8 +7,7 @@
 #include "RenderState.h"
 #include "PrimitiveType.h"
 #include <OpenGL.h>
-#include <cstddef>
-#include <cstdint>
+#include <array>
 #include <Glm.h>
 
 class Drawable; // this is needed to compile, why
@@ -19,7 +18,7 @@ public:
 	RenderTarget();
 	~RenderTarget();
 	void clear();
-	void draw(const Vertex* vertices, std::size_t vertex_count, PrimitiveType type, const RenderState& state = RenderState::Default);
+	void draw(const Vertex* vertices, const std::size_t vertex_count, PrimitiveType type, const RenderState& state = RenderState::Default);
 	void draw(const Drawable& drawable, const RenderState& state = RenderState::Default);
 private:
 	void setup_draw(const RenderState& state);

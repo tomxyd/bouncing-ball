@@ -17,17 +17,47 @@ void RenderTarget::clear()
 }
 
 
-void RenderTarget::draw(const Vertex* vertices, std::size_t vertex_count, PrimitiveType type, const RenderState& state)
+void RenderTarget::draw(const Vertex* vertices, const std::size_t vertex_count, PrimitiveType type, const RenderState& state)
 {
 	// generate vertex buffer and bind m_vertices to the buffer data
 	glGenVertexArrays(1, &vertex_array);
 	glGenBuffers(1, &vertex_buffer);
 
+    //pre-transform the vertex data into global coordinate system
+    std::array<Vertex, 4> m_cache;
+    bool use_cache_data = vertex_count <= m_cache.size();
 
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-	glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+    if (use_cache_data)
+    {
+        glm::mat4 transform = glm::mat4(1.0f);
+        {
+            for (std::size_t i = 0; i < vertex_count; ++i)
+            {
+                Vertex& vertex = m_cache[i];
+                glm::vec4 p(vertices[i].position.x,
+                    vertices[i].position.y,
+                    0.0f,
+                    1.0f);
+                glm::vec4 result = transform * p;
+                vertex.position = glm::vec2(result.x, result.y);
+                vertex.color = vertices[i].color;
+                vertex.texCoords = vertices[i].texCoords;
+                m_cache[i] = vertex;
+            }
+        }
+    }
 
 
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+    if (use_cache_data)
+    {
+        glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(Vertex), m_cache.data(), GL_STATIC_DRAW);
+    }
+    else
+    {
+        glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+
+    }
 
     glBindVertexArray(vertex_array);
     glVertexAttribPointer(
@@ -51,7 +81,6 @@ void RenderTarget::draw(const Vertex* vertices, std::size_t vertex_count, Primit
 
     glBindVertexArray(vertex_array);
     
-
     draw_primitive(type, 0, vertex_count);
 
 }
@@ -77,7 +106,7 @@ void RenderTarget::setup_draw(const RenderState& state)
    model = glm::translate(model, glm::vec3(0.5f * 10.f, 0.5f * 10.f, 0.0f));  
    model = glm::rotate(model, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));  
    model = glm::translate(model, glm::vec3(-0.5f * 10.f, -0.5f * 10.f, 0.0f));  
-   model = glm::scale(model, glm::vec3(100.f, 100.f, 1.0f));  
+   model = glm::scale(model, glm::vec3(10.f, 10.f, 1.0f));  
 
    state.m_shader->setMat4("projection", ortho);  
    state.m_shader->setMat4("model", model);  

@@ -107,7 +107,7 @@ void test_circle_shape()
 
     const Texture texture(RESOURCES_PATH "brick.png");
 
-    CircleShape circle(20.f);
+    CircleShape circle(10.f, 4);
 
 
 
@@ -128,11 +128,11 @@ void test_vertex_array()
 {
     Window window(glm::vec2{ 1280, 720 }, "My Window");
 
-    VertexArray lines(PrimitiveType::LineStrip, 3);
-    lines[0].position = glm::vec2(1.0f, 0);
-    lines[1].position = glm::vec2(0.0f, 0);
-    lines[2].position = glm::vec2(0.f, 1.0);
-    //lines[3].position = glm::vec2(1.f, 1.f);
+    VertexArray lines(PrimitiveType::LineStrip, 4);
+    lines[0].position = glm::vec2(10.0f, 0);
+    lines[1].position = glm::vec2(20.0f, 0);
+    lines[2].position = glm::vec2(30.f, 5.f);
+    lines[3].position = glm::vec2(40.f, 2.f);
 
     while (window.is_open())
     {
@@ -151,7 +151,8 @@ void test_vertex_array()
 
 int main()
 {
-    test_vertex_array();
+    //test_vertex_array();
+    test_circle_shape();
     return 0;
 }
 

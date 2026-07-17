@@ -59,9 +59,3 @@ void Window::clear() const
     glClearColor(0.2, 0.2, 0.2, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 }
-
-//void Window::draw(RenderTarget& target)
-//{
-//    glm::mat4 ortho = glm::ortho(0.0f, size.x, size.y, 0.0f, -1.f, 1.f);
-//    
-//}

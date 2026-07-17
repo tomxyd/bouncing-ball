@@ -20,19 +20,6 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 
-float aspectRatio;
-//===== camera ========//
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
-bool firstMouse = true;
-float mouseX;
-float mouseY;
-
-
-
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
@@ -73,8 +60,6 @@ void test_sprite()
 
     Sprite sprite(texture);
 
-    float speed = 0.06f;
-
     //sprite.set_color(Color::Black); // set color to yellow
 
     while (window.is_open())
@@ -84,16 +69,9 @@ void test_sprite()
 
         window.clear();
 
-        //if (sprite.get_position().x >= 1280 || sprite.get_local_bound().y >= 720)
-        //{
-        //    speed *= -1;
-        //}
-        //else
-        //    speed = speed;
+        sprite.set_position({ 200.f, 200.f });
 
-        //sprite.set_position({ sprite.get_position().x, sprite.get_position().y + speed });
-
-        //sprite.set_scale({ 150.f, 150.f });
+        sprite.set_scale({ 50.f, 50.f });
 
         window.draw(sprite);
 
@@ -109,14 +87,20 @@ void test_circle_shape()
 
     CircleShape circle(10.f, 4);
 
-
-
+    float speed = 20.f;
+     
     while (window.is_open())
     {
         processInput(window.get_window());
         glfwPollEvents();
 
         window.clear();
+
+        //circle.set_rotation(glfwGetTime() * speed);
+
+        circle.set_position({ 250.f, 250.f });
+
+        circle.set_scale({ 10.f, 10.f });
 
         window.draw(circle);
 
@@ -151,6 +135,7 @@ void test_vertex_array()
 
 int main()
 {
+    //test_sprite();
     //test_vertex_array();
     test_circle_shape();
     return 0;

@@ -18,7 +18,7 @@
 
 class Window;
 
-class Sprite : public Drawable, public Transformable
+class Sprite : public Transformable, public Drawable
 {
 public:
 	//construct sprite from a source texture
@@ -32,8 +32,8 @@ private:
 	void draw(RenderTarget& target, RenderState state) const override;
 	void update_vertices();
 	const Texture* m_texture = nullptr;
-	Color m_color;
 	std::array<Vertex, 6> m_vertices;
+	Color m_color;
 	friend class Window;
 };
 

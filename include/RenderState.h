@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "ResourceManager.h"
+#include <Transform.h>
 
 struct RenderState
 {
@@ -14,6 +15,7 @@ public:
 	static const RenderState Default;
 	const Shader* m_shader = nullptr;
 	const Texture* m_texture = nullptr;
+	Transform m_transform;
 };
 
 #endif

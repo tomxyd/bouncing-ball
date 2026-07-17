@@ -98,6 +98,7 @@ void RenderTarget::setup_draw(const RenderState& state)
        const_cast<const Shader*&>(state.m_shader) = default_shader;  
    apply_shader(state.m_shader);  
 
+
    //apply view  
    glm::mat4 model = glm::mat4(1.0f);  
    glm::mat4 ortho = glm::ortho(0.0f, 1280.f, 720.f, 0.0f, -1.f, 1.f);  
@@ -109,7 +110,9 @@ void RenderTarget::setup_draw(const RenderState& state)
    model = glm::scale(model, glm::vec3(10.f, 10.f, 1.0f));  
 
    state.m_shader->setMat4("projection", ortho);  
-   state.m_shader->setMat4("model", model);  
+   //state.m_shader->setMat4("model", model);
+   state.m_shader->setMat4("model", state.m_transform.getMatrix());
+
    glm::vec3 color = glm::vec3(1.f, 1.f, 1.f);  
    state.m_shader->setVec3("spriteColor", color);  
 
@@ -131,6 +134,7 @@ void RenderTarget::apply_shader(const Shader* shader)
     if(shader)
         Shader::bind(shader);
 }
+
 
 void RenderTarget::draw_primitive(PrimitiveType type, std::size_t first_vertex, std::size_t vertex_count)
 {

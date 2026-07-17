@@ -7,6 +7,8 @@ VertexArray::VertexArray(PrimitiveType type, std::size_t vertex_count) : m_verti
 
 void VertexArray::draw(RenderTarget& target, RenderState state) const
 {
+
+    //state.m_transform *= getTransform();
     state.m_shader = &ResourceManager::GetShader("shader1");
 	if (!m_vertices.empty())
 		target.draw(m_vertices.data(), m_vertices.size(), m_primitive_type, state);

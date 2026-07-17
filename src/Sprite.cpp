@@ -2,8 +2,8 @@
 
 glm::vec2 Sprite::get_local_bound() const
 {
-    //TO DO: WRONG CALCULATION
-    return { get_position().x + 1.0f, get_position().y + 1.0f};
+    return glm::vec2(0.f, 0.f);
+
 }
 
 void Sprite::set_color(const Color& color)
@@ -15,14 +15,13 @@ Sprite::Sprite(const Texture& texture)
 {
     update_vertices();
 
-    set_position(glm::vec2(640.f, 360.f));
-
     this->m_texture = &texture;
 }
 
 
 void Sprite::draw(RenderTarget& target, RenderState state) const
 {
+    state.m_transform *= getTransform();
     state.m_texture = m_texture;
     target.draw(m_vertices.data(), m_vertices.size(), PrimitiveType::Triangles, state);
 }

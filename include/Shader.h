@@ -1,10 +1,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp> 
+#include <OpenGL.h>
+#include <Glm.h>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -75,6 +73,14 @@ public:
         // delete the shaders as they're linked into our program now and no longer necessary
         glDeleteShader(vertex);
         glDeleteShader(fragment);
+    }
+    
+    static void bind(const Shader* shader)
+    {
+        if (shader && shader->ID)
+        {
+            shader->use();
+        }
     }
     // activate the shader
     // ------------------------------------------------------------------------

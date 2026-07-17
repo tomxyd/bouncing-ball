@@ -5,6 +5,9 @@
 #include "Window.h"
 #include "Texture.h"
 #include "Sprite.h"
+#include "CircleShape.h"
+#include "RenderState.h"
+#include "VertexArray.h"
 
 #define BUFFER_OFFSET(bytes) ((GLvoid*) (bytes))
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -16,17 +19,6 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-
-float aspectRatio;
-//===== camera ========//
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
-bool firstMouse = true;
-float mouseX;
-float mouseY;
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
@@ -60,13 +52,15 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
-int main()
+void test_sprite()
 {
     Window window(glm::vec2{ 1280, 720 }, "My Window");
 
     const Texture texture(RESOURCES_PATH "brick.png");
 
     Sprite sprite(texture);
+
+    //sprite.set_color(Color::Black); // set color to yellow
 
     while (window.is_open())
     {
@@ -75,62 +69,77 @@ int main()
 
         window.clear();
 
+        sprite.set_position({ 200.f, 200.f });
+
+        sprite.set_scale({ 50.f, 50.f });
+
         window.draw(sprite);
 
         window.display();
     }
     glfwTerminate();
-    return 0;
+}
+void test_circle_shape()
+{
+    Window window(glm::vec2{ 1280, 720 }, "My Window");
+
+    const Texture texture(RESOURCES_PATH "brick.png");
+
+    CircleShape circle(10.f, 4);
+
+    float speed = 20.f;
+     
+    while (window.is_open())
+    {
+        processInput(window.get_window());
+        glfwPollEvents();
+
+        window.clear();
+
+        //circle.set_rotation(glfwGetTime() * speed);
+
+        circle.set_position({ 250.f, 250.f });
+
+        circle.set_scale({ 10.f, 10.f });
+
+        window.draw(circle);
+
+        window.display();
+    }
+    glfwTerminate();
+}
+void test_vertex_array()
+{
+    Window window(glm::vec2{ 1280, 720 }, "My Window");
+
+    VertexArray lines(PrimitiveType::LineStrip, 4);
+    lines[0].position = glm::vec2(10.0f, 0);
+    lines[1].position = glm::vec2(20.0f, 0);
+    lines[2].position = glm::vec2(30.f, 5.f);
+    lines[3].position = glm::vec2(40.f, 2.f);
+
+    while (window.is_open())
+    {
+        processInput(window.get_window());
+        glfwPollEvents();
+
+        window.clear();
+
+        window.draw(lines);
+
+        window.display();
+    }
+    glfwTerminate();
 }
 
-//int main()
-//{
-//
-//    initialize_loaders();
-//    window = create_window();
-//    load_glad();
-//
-//    ResourceManager::LoadShader(RESOURCES_PATH "vertex.glsl", RESOURCES_PATH "fragment.glsl", "shader1");
-//
-//    object_renderer = new ObjectRenderer(ResourceManager::GetShader("shader1"), RESOURCES_PATH "Mesh.obj");
-//    sphere1 = new SphereRenderer(ResourceManager::GetShader("shader1"));
-//
-//
-//    int width = SCR_WIDTH;
-//    int height = SCR_HEIGHT;
-//    aspectRatio = (float)width / (float)height;
-//
-//
-//    while (!glfwWindowShouldClose(window))
-//    {
-//
-//        //std::cout << ndcX << std::endl;
-//        // per-frame time logic
-//        float currentFrame = static_cast<float>(glfwGetTime());
-//        deltaTime = currentFrame - lastFrame;
-//        lastFrame = currentFrame;
-//
-//        processInput(window);
-//        //display(glfwGetTime());
-//        glfwGetFramebufferSize(window, &width, &height);
-//
-//
-//        glClear(GL_DEPTH_BUFFER_BIT);
-//        glClearColor(0.2, 0.2, 0.2, 1.0);
-//        glClear(GL_COLOR_BUFFER_BIT);
-//        glEnable(GL_CULL_FACE);
-//
-//        object_renderer->draw_mesh(aspectRatio, camera);
-//        sphere1->draw_mesh(aspectRatio, glm::vec3(-3.0f, 2.0f , -8.0f), camera);
-//
-//        glfwSwapBuffers(window);
-//        glfwPollEvents();
-//    }
-//
-//    glfwTerminate();
-//    return 0;
-//}
 
+int main()
+{
+    //test_sprite();
+    //test_vertex_array();
+    test_circle_shape();
+    return 0;
+}
 
 void processInput(GLFWwindow* window)
 {
@@ -150,7 +159,6 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(RIGHT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         camera.ProcessKeyboard(UP, deltaTime);
-
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

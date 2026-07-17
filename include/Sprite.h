@@ -1,38 +1,39 @@
 #ifndef SPRITE_H
 #define SPRITE_H
+
+
 #include "Texture.h"
-#include <Shader.h>
 #include "Window.h"
-#include <glad/glad.h>
-#include <glm/glm.hpp>
 #include "helper_library.h"
 #include "ResourceManager.h"
+#include "Transformable.h"
+#include "Color.h"
+#include "PrimitiveType.h"
+#include "Vertex.h"
+#include "Drawable.h"
+#include <array>
+#include "RenderState.h"
+#include <Glm.h>
 
 
 class Window;
 
-class Sprite
+class Sprite : public Transformable, public Drawable
 {
 public:
 	//construct sprite from a source texture
 	explicit Sprite(const Texture& texture);
-	~Sprite();
+	glm::vec2 get_local_bound() const;
+	void set_color(const Color& color);
+	~Sprite() = default;
 
 
 private:
-	void draw(glm::mat4& ortho) const;
-	void load_shader();
-	unsigned int vertex_array;
-	unsigned int vertex_buffer;
-	unsigned int element_buffer;
-	const Texture* texture;
-	const Shader* shader;
-	//Transform abstract variables seperation
-	glm::vec2 position = glm::vec2(640.f,360.f);
-	glm::vec2 scale;
-	glm::vec2 size = glm::vec2(100.f, 100.f);
-	glm::vec3 color = glm::vec3(1.f);
-	//declared to call sprite's draw method
+	void draw(RenderTarget& target, RenderState state) const override;
+	void update_vertices();
+	const Texture* m_texture = nullptr;
+	std::array<Vertex, 6> m_vertices;
+	Color m_color;
 	friend class Window;
 };
 

@@ -1,16 +1,14 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+
 #include "helper_library.h"
-#include "Sprite.h"
+#include "RenderTarget.h"
+#include <OpenGL.h>
+#include <Glm.h>
 
-class Sprite; //BAD: remove circular dependency
-
-class Window
+class Window : public RenderTarget
 {
-public:
+public: 
 	//Default constructor
 	Window();
 	//@brief Frees resources attached to the window
@@ -27,22 +25,22 @@ public:
 	* @brief Swaps buffers internally.
 	*/
 	void display() const;
-	//
+	/*
+	* @brief clears the window context with default color
+	*/
 	void clear() const;
-	//Draw a sprite to the window
-	void draw(const Sprite& sprite);
 	/*
 	* @brief Returns an instance of the window created.
 	*/
 	GLFWwindow* get_window() const
 	{
-		return window;
+		return m_window;
 	}
 private:
 	void initialize_loaders();
 private:
-	GLFWwindow* window = NULL;
-	glm::vec2 size;
+	GLFWwindow* m_window = NULL;
+	glm::vec2 m_size;
 
 };
 

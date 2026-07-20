@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "ResourceManager.h"
 #include <Transform.h>
+#include <Color.h>
 
 struct RenderState
 {
@@ -16,6 +17,7 @@ public:
 	const Shader* m_shader = nullptr;
 	const Texture* m_texture = nullptr;
 	Transform m_transform;
+	Color color;
 };
 
 #endif

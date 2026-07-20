@@ -103,26 +103,25 @@ void RenderTarget::setup_draw(const RenderState& state)
    glm::mat4 model = glm::mat4(1.0f);  
    glm::mat4 ortho = glm::ortho(0.0f, 1280.f, 720.f, 0.0f, -1.f, 1.f);  
 
-   model = glm::translate(model, glm::vec3(200.f, 200.f, 0.0f));  
+   /*model = glm::translate(model, glm::vec3(200.f, 200.f, 0.0f));  
    model = glm::translate(model, glm::vec3(0.5f * 10.f, 0.5f * 10.f, 0.0f));  
    model = glm::rotate(model, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));  
    model = glm::translate(model, glm::vec3(-0.5f * 10.f, -0.5f * 10.f, 0.0f));  
-   model = glm::scale(model, glm::vec3(10.f, 10.f, 1.0f));  
+   model = glm::scale(model, glm::vec3(10.f, 10.f, 1.0f));  */
 
    state.m_shader->setMat4("projection", ortho);  
-   //state.m_shader->setMat4("model", model);
    state.m_shader->setMat4("model", state.m_transform.getMatrix());
-
-   glm::vec3 color = glm::vec3(1.f, 1.f, 1.f);  
+ 
+   glm::vec3 color = glm::vec3(state.color.r, state.color.g, state.color.b); 
    state.m_shader->setVec3("spriteColor", color);  
 
    //apply blend mode  
 
    //apply texture  
    bool hasTexture = false;
-   glActiveTexture(GL_TEXTURE0);  
    if (state.m_texture)
    {
+       glActiveTexture(GL_TEXTURE0);
        state.m_texture->bind_texture();
        hasTexture = true;
    }

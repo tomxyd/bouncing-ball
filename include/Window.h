@@ -38,11 +38,14 @@ public:
 	}
 private:
 	void initialize_loaders();
+
+	friend void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 private:
 	GLFWwindow* m_window = NULL;
 	glm::vec2 m_size;
 
 };
+
 
 
 #endif

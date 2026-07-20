@@ -90,6 +90,11 @@ void RenderTarget::draw(const Drawable& drawable, const RenderState& state)
 	drawable.draw(*this, state);
 }
 
+void RenderTarget::set_viewport(glm::vec2& size)
+{
+    viewport_size = size;
+}
+
 
 void RenderTarget::setup_draw(const RenderState& state)  
 {  
@@ -100,16 +105,9 @@ void RenderTarget::setup_draw(const RenderState& state)
 
 
    //apply view  
-   glm::mat4 model = glm::mat4(1.0f);  
-   glm::mat4 ortho = glm::ortho(0.0f, 1280.f, 720.f, 0.0f, -1.f, 1.f);  
+   apply_view(state);
 
-   /*model = glm::translate(model, glm::vec3(200.f, 200.f, 0.0f));  
-   model = glm::translate(model, glm::vec3(0.5f * 10.f, 0.5f * 10.f, 0.0f));  
-   model = glm::rotate(model, glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f));  
-   model = glm::translate(model, glm::vec3(-0.5f * 10.f, -0.5f * 10.f, 0.0f));  
-   model = glm::scale(model, glm::vec3(10.f, 10.f, 1.0f));  */
 
-   state.m_shader->setMat4("projection", ortho);  
    state.m_shader->setMat4("model", state.m_transform.getMatrix());
  
    glm::vec3 color = glm::vec3(state.color.r, state.color.g, state.color.b); 
@@ -126,6 +124,15 @@ void RenderTarget::setup_draw(const RenderState& state)
        hasTexture = true;
    }
    state.m_shader->setBool("hasTexture", hasTexture);
+}
+
+void RenderTarget::apply_view(const RenderState& state)
+{
+    glViewport(0, 0, viewport_size.x, viewport_size.y);
+
+    glm::mat4 ortho = glm::ortho(0.0f, viewport_size.x, viewport_size.y, 0.0f, -1.f, 1.f);
+
+    state.m_shader->setMat4("projection", ortho);
 }
 
 void RenderTarget::apply_shader(const Shader* shader)

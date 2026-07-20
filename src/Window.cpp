@@ -11,6 +11,7 @@ Window::Window(glm::vec2& size, const char* title)
 {
     initialize_loaders();
     this->m_size = size;
+    set_viewport(size);
     this->m_window = glfwCreateWindow(size.x, size.y, title, NULL, NULL);
     if (this->m_window == NULL)
     {
@@ -18,7 +19,7 @@ Window::Window(glm::vec2& size, const char* title)
         Tomxy::error("failed to create window");
     }
     glfwMakeContextCurrent(m_window);
-    //glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
     //glfwSetCursorPosCallback(window, mouse_callback);
     //glfwSetScrollCallback(window, scroll_callback);
 
@@ -32,6 +33,8 @@ Window::Window(glm::vec2& size, const char* title)
     ResourceManager::LoadShader(RESOURCES_PATH "sprite_vertex.glsl", RESOURCES_PATH "sprite_fragment.glsl", "shader1");
 
 }
+
+
 
 bool Window::is_open() const
 {
@@ -58,4 +61,10 @@ void Window::clear() const
 {
     glClearColor(0.2, 0.2, 0.2, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
 }

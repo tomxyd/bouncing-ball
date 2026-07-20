@@ -5,12 +5,12 @@ CircleShape::CircleShape(float radius, std::size_t point_count) : m_radius(radiu
 	update();
 }
 
-std::size_t CircleShape::get_point_count() 
+std::size_t CircleShape::get_point_count() const
 {
 	return m_point_count;
 }
 
-glm::vec2 CircleShape::get_point(size_t index) 
+glm::vec2 CircleShape::get_point(size_t index) const
 {
     const float PI = 3.14159265358979323846f;
     float fraction = static_cast<float>(index) / static_cast<float>(m_point_count);

@@ -20,9 +20,10 @@ public:
 	Shape() = default;
 	~Shape() = default;
 	glm::vec2 get_local_bound() const;
+	glm::vec2 get_geometric_centre() const;
 	void set_color(Color color);
-	virtual std::size_t get_point_count() = 0;
-	virtual glm::vec2 get_point(size_t index) = 0;
+	virtual std::size_t get_point_count() const = 0;
+	virtual glm::vec2 get_point(size_t index) const = 0;
 	void set_shader(const Shader& shader);
 protected:
 	void update();

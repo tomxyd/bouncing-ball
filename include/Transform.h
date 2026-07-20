@@ -30,6 +30,7 @@ public:
 	Transform& combine(const Transform& transform);
 	Transform& translate(glm::vec2 offset);
 	Transform& scale(glm::vec2 factor);
+	Transform& rotate(float angle);
 
 private:
 	glm::mat4 m_matrix = glm::mat4(1.0f);

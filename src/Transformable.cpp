@@ -17,6 +17,8 @@ void Transformable::set_origin(glm::vec2 origin)
 void Transformable::set_rotation(float angle)
 {
 	m_rotation = angle;
+	m_transform_needs_updated = true;
+
 }
 
 void Transformable::set_scale(glm::vec2 factors)

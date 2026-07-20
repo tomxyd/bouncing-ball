@@ -55,3 +55,10 @@ Transform& Transform::scale(glm::vec2 factor)
     return *this;
 }
 
+Transform& Transform::rotate(float angle)
+{
+    float angle_in_radians = glm::radians(angle);
+    m_matrix = glm::rotate(m_matrix, angle_in_radians, glm::vec3(0, 0, 1));
+    return *this;
+}
+

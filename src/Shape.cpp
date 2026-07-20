@@ -40,3 +40,33 @@ void Shape::set_shader(const Shader& shader)
 {
     m_shader = &shader;
 }
+
+//FIX: FORMULA WRONG
+glm::vec2 Shape::get_geometric_centre() const
+{
+    const auto count = get_point_count();
+
+    switch (count)
+    {
+    case 0:
+        assert(false && "Cannot calculate geometric centre of shape with no points");
+        return glm::vec2{};
+    case 1:
+        return get_point(0);
+        break;
+    case 2: 
+        return (get_point(0) + get_point(1)) / 2.f;
+        break;
+    default:
+        glm::vec2 centroid{ 0.f, 0.f };
+
+        for (size_t i = 0; i < count; ++i)
+        {
+            centroid += get_point(i);
+        }
+
+        centroid /= static_cast<float>(count);
+        return centroid;
+    }
+
+}

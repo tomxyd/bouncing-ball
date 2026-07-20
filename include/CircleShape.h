@@ -9,8 +9,8 @@ class CircleShape : public Shape
 {
 public:
 	explicit CircleShape(float radius = 0, std::size_t point_count = 30);
-	std::size_t get_point_count() override;
-	glm::vec2 get_point(size_t index) override;
+	std::size_t get_point_count() const override;
+	glm::vec2 get_point(size_t index) const override;
 
 
 private:

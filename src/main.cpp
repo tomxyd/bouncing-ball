@@ -1,6 +1,5 @@
 #include <GLFW/glfw3.h>
 #include "ResourceManager.h"
-#include "camera.h"
 #include "Shader.h"
 #include "Window.h"
 #include "Texture.h"
@@ -47,11 +46,16 @@ void test_circle_shape()
 {
     Window window(glm::vec2{ 1280, 720 }, "My Window");
 
-    const Texture texture(RESOURCES_PATH "brick.png");
-
-    CircleShape circle(10.f, 4);
+    CircleShape circle(10.f, 12);
 
     float speed = 20.f;
+
+    std::cout << circle.get_geometric_centre().x << ", " << circle.get_geometric_centre().y;
+
+    circle.set_scale({ 10.f, 10.f });
+
+    circle.set_origin(circle.get_geometric_centre());
+
      
     while (window.is_open())
     {
@@ -61,11 +65,10 @@ void test_circle_shape()
         window.clear();
 
         circle.set_color(Color::Red);
-        //circle.set_rotation(glfwGetTime() * speed);
 
         circle.set_position({ 250.f, 250.f });
 
-        circle.set_scale({ 10.f, 10.f });
+        circle.set_rotation(45);
 
         window.draw(circle);
 

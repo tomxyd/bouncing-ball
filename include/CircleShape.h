@@ -3,7 +3,7 @@
 
 #include "Shape.h"
 
-class Window;
+//class Window;
 
 class CircleShape : public Shape
 {

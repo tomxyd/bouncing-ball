@@ -1,22 +1,13 @@
 #include "Shape.h"
 
-
-Shape::~Shape()
-{
-    //glDeleteVertexArrays(1, &vertex_array);
-    //glDeleteBuffers(1, &vertex_buffer);
-    //glDeleteBuffers(1, &element_buffer);
-
-}
-
 glm::vec2 Shape::get_local_bound() const
 {
     return glm::vec2(0.f, 0.f);
 }
 
-void Shape::set_color(glm::vec3 color)
+void Shape::set_color(Color color)
 {
-    this->color = color;
+    m_color = color;
 }
 
 void Shape::update()
@@ -41,6 +32,7 @@ void Shape::draw(RenderTarget& target, RenderState state) const
 
     state.m_transform *= getTransform();
     state.m_texture = m_texture;
+    state.color = m_color;
     target.draw(m_vertices, state);
 }
 

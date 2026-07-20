@@ -9,7 +9,7 @@ Window::~Window() = default;
 
 Window::Window(glm::vec2& size, const char* title)
 {
-    Window();
+    initialize_loaders();
     this->m_size = size;
     this->m_window = glfwCreateWindow(size.x, size.y, title, NULL, NULL);
     if (this->m_window == NULL)

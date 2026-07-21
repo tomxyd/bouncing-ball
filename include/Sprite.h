@@ -4,11 +4,8 @@
 
 #include "Texture.h"
 #include "Window.h"
-#include "helper_library.h"
-#include "ResourceManager.h"
 #include "Transformable.h"
 #include "Color.h"
-#include "PrimitiveType.h"
 #include "Vertex.h"
 #include "Drawable.h"
 #include <array>

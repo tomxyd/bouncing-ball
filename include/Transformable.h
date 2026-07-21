@@ -17,7 +17,7 @@ public:
 	glm::vec2 get_origin() const;
 	float get_rotation() const;
 	glm::vec2 get_scale() const;
-	const Transform& getTransform() const;
+	const Transform& get_transform() const;
 private:
 	glm::vec2 m_origin{ 0.f, 0.f };
 	glm::vec2 m_position{0.f,0.f };

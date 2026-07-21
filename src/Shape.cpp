@@ -1,8 +1,13 @@
 #include "Shape.h"
 
-glm::vec2 Shape::get_local_bound() const
+FloatRect Shape::get_local_bound() const
 {
-    return glm::vec2(0.f, 0.f);
+    return m_bounds;
+}
+
+FloatRect Shape::get_global_bound() const
+{
+    return get_transform().transform_rect(get_local_bound());
 }
 
 void Shape::set_color(Color color)
@@ -23,14 +28,14 @@ void Shape::update()
     m_vertices[count + 1].position = m_vertices[1].position; // the last position becomes the first index position
 
     m_vertices[0] = m_vertices[1];
-
+    m_bounds = m_vertices.get_bounds();
 
 }
 
 void Shape::draw(RenderTarget& target, RenderState state) const
 {
 
-    state.m_transform *= getTransform();
+    state.m_transform *= get_transform();
     state.m_texture = m_texture;
     state.color = m_color;
     target.draw(m_vertices, state);

@@ -10,6 +10,18 @@ std::size_t CircleShape::get_point_count() const
 	return m_point_count;
 }
 
+void CircleShape::set_radius(float radius)
+{
+    m_radius = radius;
+    update();
+}
+
+void CircleShape::set_point_count(std::size_t count)
+{
+    m_point_count = count;
+    update();
+}
+
 glm::vec2 CircleShape::get_point(size_t index) const
 {
     const float PI = 3.14159265358979323846f;

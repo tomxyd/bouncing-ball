@@ -26,6 +26,46 @@ const Vertex& VertexArray::operator[](std::size_t index) const
     return m_vertices[index];
 }
 
+FloatRect VertexArray::get_bounds() const
+{
+    if (!m_vertices.empty())
+    {
+        float left = m_vertices[0].position.x;
+        float top = m_vertices[0].position.y;
+        float right = m_vertices[0].position.x;
+        float bottom = m_vertices[0].position.y;
+
+
+        for (std::size_t i = 1; i < m_vertices.size(); ++i)
+        {
+            const glm::vec2 position = m_vertices[i].position;
+
+            if (position.x < left)
+            {
+                left = position.x;
+            }
+            else if (position.x > right)
+            {
+                right = position.x;
+            }
+
+            if (position.y < top)
+            {
+                top = position.y;
+            }
+            else if (position.y > bottom)
+            {
+                bottom = position.y;
+            }
+        }
+
+        return { {left, top}, {right - left, bottom - top} };
+
+    }
+
+    return {};
+}
+
 void VertexArray::clear()
 {
     m_vertices.clear();

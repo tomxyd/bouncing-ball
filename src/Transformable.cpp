@@ -48,7 +48,7 @@ glm::vec2 Transformable::get_scale() const
 	return m_scale;
 }
 
-const Transform& Transformable::getTransform() const
+const Transform& Transformable::get_transform() const
 {
 	if (m_transform_needs_updated)
 	{

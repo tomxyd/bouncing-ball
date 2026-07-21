@@ -21,7 +21,7 @@ Sprite::Sprite(const Texture& texture)
 
 void Sprite::draw(RenderTarget& target, RenderState state) const
 {
-    state.m_transform *= getTransform();
+    state.m_transform *= get_transform();
     state.m_texture = m_texture;
     target.draw(m_vertices.data(), m_vertices.size(), PrimitiveType::Triangles, state);
 }

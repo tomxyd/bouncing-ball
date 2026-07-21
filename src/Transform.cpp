@@ -37,6 +37,42 @@ Transform::Transform(float a00, float a01, float a02,
     m_matrix[3][3] = 1.0f;
 }
 
+FloatRect Transform::transform_rect(const FloatRect& rectangle) const
+{
+    glm::vec2 p0 = rectangle.position;
+    glm::vec2 p2 = rectangle.position + glm::vec2(rectangle.size.x, 0.0f);
+    glm::vec2 p3 = rectangle.position + rectangle.size;
+    glm::vec2 p1 = rectangle.position + glm::vec2(0.0f, rectangle.size.y);
+
+    auto transformPoint = [&](const glm::vec2& p) {
+        glm::vec4 r = m_matrix * glm::vec4(p, 0.0f, 1.0f);
+        return glm::vec2(r.x, r.y);
+        };
+
+    glm::vec2 t0 = transformPoint(p0);
+    glm::vec2 t1 = transformPoint(p1);
+    glm::vec2 t2 = transformPoint(p2);
+    glm::vec2 t3 = transformPoint(p3);
+
+    const std::array points = { t0, t1, t2, t3 };
+    // Compute the bounding rectangle of the transformed points
+    glm::vec2 pmin = points[0];
+    glm::vec2 pmax = points[0];
+
+    for (std::size_t i = 1; i < points.size(); ++i)
+    {
+        // clang-format off
+        if (points[i].x < pmin.x) pmin.x = points[i].x;
+        else if (points[i].x > pmax.x) pmax.x = points[i].x;
+
+        if (points[i].y < pmin.y) pmin.y = points[i].y;
+        else if (points[i].y > pmax.y) pmax.y = points[i].y;
+        // clang-format on
+    }
+
+    return { pmin, pmax - pmin };
+}
+
 Transform& Transform::combine(const Transform& transform)
 {
     m_matrix = m_matrix * transform.m_matrix;

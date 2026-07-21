@@ -5,6 +5,7 @@
 #include <Vertex.h>
 #include <Vector>
 #include "PrimitiveType.h"
+#include <Rect.h>
 
 /*
 *  class VertexArray
@@ -32,6 +33,7 @@ public:
 	explicit VertexArray(PrimitiveType type, std::size_t vertex_count = 0);
 	Vertex& VertexArray::operator[](std::size_t index);
 	const Vertex& VertexArray::operator[](std::size_t index) const;
+	FloatRect get_bounds() const;
 	void clear();
 	void resize(std::size_t count);
 

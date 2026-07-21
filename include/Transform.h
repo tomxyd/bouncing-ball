@@ -2,6 +2,8 @@
 #define TRANSFORM_H
 
 #include <Glm.h>
+#include <Rect.h>
+#include <algorithm>
 #include <array>
 
 class Transform
@@ -25,7 +27,7 @@ public:
 	///
 	////////////////////////////////////////////////////////////
 	Transform(float a00, float a01, float a02, float a10, float a11, float a12, float a20, float a21, float a22);
-	// Define the assignment operator
+	FloatRect transform_rect(const FloatRect& rectangle) const;
 
 	Transform& combine(const Transform& transform);
 	Transform& translate(glm::vec2 offset);

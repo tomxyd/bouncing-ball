@@ -20,6 +20,7 @@ Window::Window(glm::vec2& size, const char* title)
     }
     glfwMakeContextCurrent(m_window);
     glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
+    glfwSwapInterval(m_fps);
     //glfwSetCursorPosCallback(window, mouse_callback);
     //glfwSetScrollCallback(window, scroll_callback);
 
@@ -47,6 +48,11 @@ bool Window::is_open() const
 void Window::display() const
 {
     glfwSwapBuffers(m_window);
+    if (m_frame_rate_changed == true)
+    {
+        glfwSwapInterval(m_fps);
+        m_frame_rate_changed = false;
+    }
 }
 
 void Window::initialize_loaders()
@@ -63,6 +69,22 @@ void Window::clear() const
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void Window::set_frame_rate_limit(const unsigned int& fps)
+{
+    m_frame_rate_changed = true;
+    switch (fps)
+    {
+    case 60:
+        m_fps = 6;
+        break;
+    case 90:
+        m_fps = 4;
+        break;
+    default: // no limit
+        m_fps = 0;
+        break;
+    }
+}
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {

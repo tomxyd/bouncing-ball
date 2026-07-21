@@ -36,6 +36,7 @@ public:
 	{
 		return m_window;
 	}
+	void set_frame_rate_limit(const unsigned int& fps);
 private:
 	void initialize_loaders();
 
@@ -43,6 +44,8 @@ private:
 private:
 	GLFWwindow* m_window = NULL;
 	glm::vec2 m_size;
+	unsigned int m_fps;
+	mutable bool m_frame_rate_changed = false;
 
 };
 
